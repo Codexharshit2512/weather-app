@@ -1,0 +1,139 @@
+.overlay{
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color:rgba(0,0,0,0.3);
+    overflow: hidden;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.modal-box{
+   position: relative;
+   z-index: 999;
+   padding: 1rem;
+   background-color: #fff;
+   width: 400px;
+   border-radius: 15px;
+   box-shadow: 1px 1px 10px;
+   animation: appear 1s 1;
+}
+
+
+
+.search-bar{
+   position: relative;
+   margin-top: 10px;
+}
+
+.plain{
+    display:block;
+    outline: 0;
+    border: 1px solid #afafaf;
+    border-radius: 20px;
+    box-shadow: 1px 1px 4px;
+    background: none;
+    width: 100%;
+    padding: 4px 5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.search-icon{
+  position: absolute;
+  top: 1px;
+  right:0.5px;
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+
+  color: floralwhite;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.close-btn{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.close-btn a{
+    color: floralwhite;
+    padding: 6px 2rem;
+}
+
+.close-btn a:hover{
+    color: gainsboro;
+}
+
+
+.place-item{
+    text-align: left;
+    padding: 10px;
+    font-size: 17px;
+    background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(205,179,213,1) 37%, rgba(148,187,233,1) 100%);
+    color: floralwhite;
+    border-bottom: 1px solid #0f0f0f;
+    cursor: pointer;
+}
+
+.place-item:first-child{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.place-item:last-child{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.place-item:hover{
+    color: royalblue;
+}
+
+.hr{
+    margin: 6px 0;
+    padding: 0 2rem;
+}
+
+.hr div{
+    height: 2px;
+    background-color: #9b9b9b;
+}
+
+.geo-err{
+    color: red;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.fetched{
+    display:block;
+    outline: 0;
+    border: 1px  #afafaf;
+    border-radius: 20px;
+    background: none;
+    width: 100%;
+    padding: 4px 5px;
+    text-align: center;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+}
+
+
+
+@keyframes appear{
+    from{transform: translateY(-100%);}
+    to{transform: translateY(0);}
+}

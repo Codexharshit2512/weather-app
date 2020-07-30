@@ -1,0 +1,265 @@
+body{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.parent-con{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    justify-content: center;
+    width: 100%;
+}
+
+.child-con{
+    width: 900px;
+    padding: 1rem;
+}
+
+
+.forecast-con{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    perspective: 200px;
+}
+
+.current-con{
+   flex: 2;
+   overflow: hidden;
+   height: 455px;
+   padding: 1rem 0 10px 0;
+   background: url('./shared/images/lightning-and-gray-clouds-1162251.jpg');
+   background-repeat: no repeat;
+   background-position: center;
+   background-size: cover;
+   border-radius: 20px;
+   transform-style: preserve-3d;
+   transform: rotateY(3deg);
+   box-shadow: 1px 1px 10px;
+   animation-name: attachLeft;
+   animation-duration: 1s;
+   animation-timing-function: ease-out;
+}
+
+.weekly-con{
+   flex: 2;
+   position: relative;
+   left: -10px;
+   z-index: -1;
+   box-shadow: 1px 1px 10px;
+   border-radius: 20px;
+   height: 380px;
+   transform:translateY(9%);
+   animation-name: attachRight;
+   animation-duration: 1s;
+   animation-timing-function: ease-out;
+}
+
+
+
+.weekly-info{
+    background: rgb(238,174,202);
+background: linear-gradient(276deg, rgba(238,174,202,1) 0%, rgba(28,29,51,1) 0%);
+    padding: 1rem 1rem 1rem 2rem;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.current-info{
+    display: flex;
+    height: 95%;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 2rem;
+    
+}
+
+.full-day{
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.current-forecast{
+   margin-top: auto;
+   color: floralwhite;
+   display: flex;
+   flex-direction: column;
+}
+.current-skycon{
+    transform: translateX(-30%);
+}
+
+.location{
+    color: azure;
+    margin-top: 1rem;
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.current-temp{
+    font-weight: 400;
+}
+
+.current-text{
+    font-size: 18px;
+    font-weight: 500;
+}
+.weekly-box{
+    background: rgb(238,174,202);
+    background: linear-gradient(276deg, rgba(238,174,202,1) 0%, rgba(35,37,62,1) 0%);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.daily-forecast{
+    padding: 13px 0;
+    color: floralwhite;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.detail{
+   display: flex;
+   flex-direction: row;
+   padding: 5px 10px;
+   font-size: 19px;
+}
+
+.detail div:first-child{
+    color: floralwhite;
+    font-weight: 500;
+}
+
+.daily-temp,.short-day{
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.short-day{
+    font-weight: 300;
+}
+
+
+.detail div:last-child{
+    margin-left: auto;
+    color: #e2e2e2;
+}
+
+.weekly-forecast{
+    margin-top: 1.5rem;
+    
+}
+
+
+
+.weekly-box div{
+    flex: 2;
+}
+
+.change-btn{
+    background-image: radial-gradient( circle farthest-corner at 22.4% 21.7%,  rgba(4,189,228,1) 0%, rgba(2,83,185,1) 100.2% );
+    display: block;
+    text-align: center;
+    padding: 9px 0;
+    border-radius: 40px;
+    color: floralwhite;
+    font-size: 18px;
+    margin-top: 1rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 4px;
+    transition: transform 200ms linear;
+}
+
+.change-btn:hover{
+    transform: scale(1.03);
+}
+
+.change-btn span{
+    color: floralwhite;
+}
+
+@keyframes attachLeft{
+   from{transform:translateX(-20%) rotateY(3deg)}
+   to{transform: translateX(0) rotateY(3deg);}
+}
+
+@keyframes attachRight{
+    from{transform:translateX(20%) translateY(10%)}
+    to{transform: translateX(0) translateY(10%);}
+ }
+
+@media screen and (max-width:650px){
+
+    .parent-con{
+       
+        padding: 1rem;
+    }
+    
+    
+    
+    .forecast-con{
+        display: flex;
+        flex-direction: column;
+    }
+    .current-forecast{
+        display: flex;
+        flex-direction: column;
+     }
+    
+    .current-con{
+       flex: 2;
+       height: 390px;
+       transform-style: preserve-3d;
+       transform: rotateX(-1deg);
+       animation-name: attachTop;
+       animation-duration: 1s;
+       animation-timing-function: ease-out;
+        
+    }
+
+    .current-info{
+        text-align: center;
+    }
+    
+    .weekly-con{
+       flex: 2;
+       position:relative;
+       top: -10px;
+       left: 1px;
+       z-index: -1;
+       height: 400px;
+       transform: rotateX(1deg);
+       animation-name: attachBottom;
+       animation-duration: 1s;
+       animation-timing-function: ease-out;
+    }
+
+    .current-skycon{
+        transform: translateX(0);
+        align-self:center ;
+    }
+    
+    .details{
+        margin-top: 1rem;
+    }
+
+    @keyframes attachTop{
+        from{transform:translateY(-20%) rotateX(-1deg)}
+        to{transform: translateY(0) rotateX(-1deg);}
+     }
+     
+     @keyframes attachBottom{
+         from{transform:translateX(20%) rotateX(1deg)}
+         to{transform: translateX(0) rotateX(1deg);}
+      }
+}
+
+.active{
+    background-color:#fff;
+    color: #2b2b2b;
+}
+
+
+

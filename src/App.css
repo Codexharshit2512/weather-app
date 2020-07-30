@@ -1,0 +1,32 @@
+.main-header{
+  padding: 1rem;
+  background-color: #08AEEA;
+  background-image: linear-gradient(270deg, #08AEEA 0%, #2AF598 100%);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow:0 1px 7px;
+}
+
+.logo{
+  text-align: left;
+  color: azure;
+  text-shadow:1px 1px 5px black;
+  cursor: pointer;
+}
+
+.date{
+  text-align: right;
+  font-size: 20px;
+  color: azure;
+  transform: translateY(10%);
+}
+
+@media screen and (max-width:576px){
+  .logo{
+    text-align: center;
+  }
+  
+  .date{
+    display: none;
+  }
+}
