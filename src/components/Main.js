@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {fetchPlaces,forecast} from '../Fetch';
+import {fetchPlaces,forecast,postWeather,loadWeather} from '../Fetch';
 import Header from './Header';
 import Weather from './Weather';
 
@@ -10,11 +10,20 @@ class Main extends Component{
         this.state={
             places:[],
             geoCodeErr:null,
-            weatherForecast:[],
+            weatherForecast:null,
             forecastErr:null,
             selectedLoc:'',
             isForecastLoading:false
         };
+    }
+
+    componentDidMount(){
+       loadWeather()
+       .then(result => {
+           if(result) this.setState({selectedLoc:result.location,weatherForecast:result.forecast});
+           else this.setState({selectedLoc:'',weatherForecast:[]});
+       })
+       .catch(err => console.log(err))
     }
 
 
@@ -32,7 +41,9 @@ class Main extends Component{
         this.setState({isForecastLoading:true})
         forecast(latitude,longitude)
         .then(result => {
-            this.setState({weatherForecast:result,forecastErr:null,selectedLoc:location,isForecastLoading:false})
+            this.setState({weatherForecast:result,forecastErr:null,selectedLoc:location,isForecastLoading:false},() => {
+                postWeather(this.state.selectedLoc,this.state.weatherForecast);
+            })
         })
         .catch(err => this.setState({weatherForecast:[],forecastErr:err,selectedLoc:'',isForecastLoading:false}))
     }
@@ -45,7 +56,7 @@ class Main extends Component{
         return(
             <React.Fragment>
                <Header />
-               <Weather search={this.searchLocation} clear={this.clearList} places={this.state.places} geoErr={this.state.geoCodeErr} forecast={this.fetchWeather} forecastData={this.state.weatherForecast} forcastErr={this.state.forcastErr} location={this.state.selectedLoc} loading={this.state.isForecastLoading} />
+               <Weather search={this.searchLocation} clear={this.clearList} places={this.state.places} geoErr={this.state.geoCodeErr} forecast={this.fetchWeather} forecastData={this.state.weatherForecast} forcastErr={this.state.forcastErr} location={this.state.selectedLoc} loading={this.state.isForecastLoading}  />
             </React.Fragment>
         )
     }

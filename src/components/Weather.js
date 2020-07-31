@@ -1,6 +1,10 @@
 import React from 'react';
 import Modal from './Modal';
-import Skycons from 'react-skycons';
+import ReactAnimatedWeather from 'react-animated-weather';
+import Weekly from './Weekly';
+import Loader from './Loader';
+import {extractDate} from '../Date';
+import { Setbg } from '../Setbg';
 
 
 class Weather extends React.Component{
@@ -15,12 +19,13 @@ class Weather extends React.Component{
 
 
     changeCurrent=(value) => {
-        this.setState({current:value});
+        this.setState({current:value},() => console.log(this.state.current));
     }
 
-    componentDidUpdate(){
-        console.log('updated');
+    componentDidUpdate(prevProps){
+       if(prevProps.location!=this.props.location) this.setState({current:0});
     }
+
 
     toggleModal=() => {
         this.setState({isModalOpen:!this.state.isModalOpen},() => {
@@ -38,55 +43,38 @@ class Weather extends React.Component{
         )
     }
 
-    extractDate=(time,type) => {
-        let unixTime,date;
-        switch(type){
-            case 'full':
-                unixTime=time*1000;
-                date=new Date(unixTime).toLocaleString('en-US',{day:'numeric',year:'numeric',month:'short',weekday:'long'});
-                let dateArr=date.split(',');
-                
-                return (
-                    <React.Fragment>
-                       <span className="full-day">{dateArr[0]}</span>
-                       <br/>
-                       <span>{dateArr[1]},{dateArr[2]}</span>
-                    </React.Fragment>
-                );
-            case 'shortDay':
-                unixTime=time*1000;
-                date=new Date(unixTime).toLocaleString('en-US',{weekday:'short'});
-                return(
-                    <div className="short-day text-center">{date}</div>
-                )
-        }
-    } 
-
+    
 
     render(){
         const {forecastData:forecast}=this.props;
         const {current}=this.state;
-        console.log('rendering');
+
+        if(!forecast){
+            return(
+                <Loader />
+            )
+        }
+
         return(
             <React.Fragment>
                 <div className="mt-5">
                     <div className="parent-con">
                         <div className="child-con">
                             <div className="forecast-con">
-                                <div className="current-con">
+                                <div className="current-con" style={Setbg(forecast.length!=0 ? forecast[current].icon : 'CLEAR_DAY')} >
                                     <div className="current-info">
                                         <div className="forecast-date">
-                                            { forecast.length!=0 ? this.extractDate(forecast[current].time,'full') : null}
+                                            { forecast.length!=0 ? extractDate(forecast[current].time,'full') : null}
                                         </div>
                                         <h4 className='location'>
                                             <span className="fa fa-map-marker"></span>
                                         <span className="ml-2">{this.props.location!='' ? this.props.location : 'location'}</span>
                                         </h4>
                                         <div className="current-forecast">
-                                            <div className="current-skycon" style={{width:'160px',height:'80px'}}>
-                                              <Skycons color='floralWhite'  icon={forecast.length!=0 ? forecast[current].icon : 'CLEAR_DAY'} autoplay={true} /> 
+                                            <div className="current-skycon">
+                                              <ReactAnimatedWeather color='floralWhite'  icon={forecast.length!=0 ? forecast[current].icon : 'CLEAR_DAY'} size={100} animate={true} /> 
                                             </div>
-                                        <div className="current-temp display-4">{ forecast.length!=0? Math.round((forecast[current].temperatureHigh+forecast[current].temperatureLow)/2) : '21'}°C</div>
+                                            <div className="current-temp display-4">{ forecast.length!=0? Math.round((forecast[current].temperatureHigh+forecast[current].temperatureLow)/2) : '21'}°C</div>
                                             <div className="current-text">
                                                 { forecast.length!=0 ? forecast[current].summary : null}
                                             </div>
@@ -99,11 +87,11 @@ class Weather extends React.Component{
                                             <ul className="list-unstyled">
                                                 <li className="detail">
                                                     <div>PRECIPITATION</div>
-                                                    <div>{forecast.length!=0 ? forecast[current].precipProbability*100 : 0}%</div>
+                                                    <div>{forecast.length!=0 ? (forecast[current].precipProbability*100).toPrecision(2) : 0}%</div>
                                                 </li>
                                                 <li className="detail">
                                                     <div>HUMIDITY</div>
-                                                <div>{forecast.length!=0 ? forecast[current].humidity*100 : 0}%</div>
+                                                <div>{forecast.length!=0 ? (forecast[current].humidity*100).toPrecision(2) : 0}%</div>
                                                 </li>
                                                 <li className="detail">
                                                     <div>WIND</div>
@@ -113,28 +101,20 @@ class Weather extends React.Component{
                                         </div>
                                         <div className="weekly-forecast">
                                             <div className="weekly-box">
-                                                {forecast.map((day,index) => {
+                                                {forecast.map(day => {
                                                 
                                                         var classStr,color;
-                                                        if(index === current){
+                                                        if(day.id === current){
                                                             classStr='daily-forecast active';
                                                             color='#505050';
                                                         }
                                                         else{
                                                             classStr='daily-forecast';
-                                                            color='red';
+                                                            color='floralwhite';
                                                         }
-                                                        // console.log(color);
+                    
                                                         return(
-                                                            <div onClick={() => this.changeCurrent(index)} className={classStr} key={day.time}>
-                                                                <div className="skycon d-flex justify-content-center" style={{width:'100px',height:'45px'}}>
-                                                                    <Skycons color={color}  icon={day.icon} autoplay={true} />
-                                                                </div>
-                                                                {this.extractDate(day.time,'shortDay')}
-                                                                <div className="daily-temp text-center">
-                                                                    {Math.round((day.temperatureHigh+day.temperatureLow)/2)}°C
-                                                                </div>
-                                                            </div>
+                                                            <Weekly click={this.changeCurrent} key={day.time} day={day} color={color} classStr={classStr} />
                                                         )
                                                     
                                                 })}

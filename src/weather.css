@@ -29,7 +29,8 @@ body{
    overflow: hidden;
    height: 455px;
    padding: 1rem 0 10px 0;
-   background: url('./shared/images/lightning-and-gray-clouds-1162251.jpg');
+   /* background: url('./shared/images/lightning-and-gray-clouds-1162251.jpg'); */
+   /* background-image: url('./shared/images/clear_day.jpg'); */
    background-repeat: no repeat;
    background-position: center;
    background-size: cover;
@@ -72,6 +73,7 @@ background: linear-gradient(276deg, rgba(238,174,202,1) 0%, rgba(28,29,51,1) 0%)
     flex-direction: column;
     justify-content: flex-start;
     padding: 0 2rem;
+    color: floralwhite;
     
 }
 
@@ -82,12 +84,8 @@ background: linear-gradient(276deg, rgba(238,174,202,1) 0%, rgba(28,29,51,1) 0%)
 
 .current-forecast{
    margin-top: auto;
-   color: floralwhite;
    display: flex;
    flex-direction: column;
-}
-.current-skycon{
-    transform: translateX(-30%);
 }
 
 .location{
